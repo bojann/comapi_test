@@ -1,7 +1,14 @@
 import React from 'react';
 import { Row, Grid } from 'react-bootstrap/lib';
 
-const RepoCommit = () => {
+const RepoCommit = ({gitCommits}) => {
+    const commitList = gitCommits.map( (commit) => {
+        console.log('commit:   ',commit);
+
+        return(
+            <div>{commit}</div>
+        )
+    });
 
     return(
         <div>

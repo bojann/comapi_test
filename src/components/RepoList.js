@@ -2,30 +2,37 @@ import React from 'react';
 import {Col, Grid, Row, ListGroup, ListGroupItem, Button} from 'react-bootstrap/lib';
 import {Link} from 'react-router-dom';
 
-const RepoList = ({gitRepositories}) => {
+const RepoList = ({gitRepositories, onClickHandlePathname}) => {
     const publicList = gitRepositories.map( (repo) => {
         console.log('repo:   ',repo);
+
+        let releaselink = `/releases?${repo.name}`
+        let commitslink = `/commits?${repo.name}`
+        let gitCommitsPath = `${repo.name}/commits`;
+        let gitReleaselink = `${repo.name}/releases`;
+
+        if( repo.name.length > 20) {
+            repo.name = `${repo.name.substring(0,23)}...`;
+        }
+
         return (
             <Col xs={6} md={4} key={repo.id}>
                 <ListGroupItem bsStyle="info" className="repo-list-item">
                     <div>Name: {repo.name}</div>
-                    <div>Language: {repo.language ? repo.language : 'No language'}</div>
+                    <div>Language: {repo.language ? repo.language : <span className="red-color">'No language'</span>}</div>
                     <a href={repo.html_url} target="_blank">Link to {repo.name}</a>
                     <Row>
                         <Button>
-                            <Link to='/releases'>View Releases</Link>
+                            <Link to={releaselink} data-gitpathname={gitReleaselink} onClick={onClickHandlePathname}>View Releases</Link>
                         </Button>
                         <Button>
-                            <Link to='/commits'>View Commits</Link>
+                            <Link to={commitslink} data-gitpathname={gitCommitsPath} onClick={onClickHandlePathname}>View Commits</Link>
                         </Button>
                     </Row>
                 </ListGroupItem>
             </Col>
         )
     })
-
-    // <Commits commitsUrl={repo.commits_url}  onClickShowModal="onClickShowModal"></Commits>
-    // <Releases releasesUrl={repo.releases_url}  onClickShowModal="onClickShowModal"></Releases>
 
     return(
         <div>

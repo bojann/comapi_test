@@ -1,7 +1,14 @@
 import React from 'react';
 import { Grid, Row } from 'react-bootstrap/lib';
 
-const RepoResources = () => {
+const RepoResources = ({gitReleases}) => {
+    const releaseList = gitReleases.map( (release) => {
+        console.log('release:   ',release);
+
+        return(
+            <div>{release}</div>
+        )
+    });
 
     return(
         <div>
