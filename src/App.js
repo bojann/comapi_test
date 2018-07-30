@@ -17,10 +17,12 @@ const RepoCommit = Loadable({
   loader: () => import('./components/RepoCommit'),
   loading: LoadingSpinner,
 });
-const RepoResources = Loadable({
-  loader: () => import('./components/RepoResources'),
+const RepoReleases = Loadable({
+  loader: () => import('./components/RepoReleases'),
   loading: LoadingSpinner,
 });
+
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -32,7 +34,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`${baseUrl}/repos`)
+    axios({
+      mehod: 'GET',
+      url: `${baseUrl}/repos`,
+      timeout: 5000,
+
+    })
       .then(res => {
         const publicRepos = res.data;
         console.log(res.data)
@@ -44,17 +51,17 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Comapi Github Public Repo's</h1>
+          <h1 className="App-title">Comapi Github Public Repos</h1>
         </header>
         <BrowserRouter>
-          <Switch>  
+          <Switch>
             <Route exact path='/' render={() => <RepoList gitRepositories={this.state.publicRepos}></RepoList>} />
-            <Route exact path='/resources' component={RepoResources} />
+            <Route exact path='/releases' component={RepoReleases} />
             <Route exact path='/commits' component={RepoCommit} />
           </Switch>
         </BrowserRouter>
       </div>
-    );
+    )
   }
 }
 

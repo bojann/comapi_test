@@ -1,4 +1,4 @@
-import React, {Componenet} from 'react';
+import React from 'react';
 import {Col, Grid, Row, ListGroup, ListGroupItem, Button} from 'react-bootstrap/lib';
 import {Link} from 'react-router-dom';
 

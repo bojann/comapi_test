@@ -1,17 +1,17 @@
 import React from 'react';
-import { Row, Grid } from 'react-bootstrap/lib';
+import { Grid, Row } from 'react-bootstrap/lib';
 
-const RepoCommit = () => {
+const RepoResources = () => {
 
     return(
         <div>
             <Grid>
                 <Row className="show-grid">
-                    COMMITS
+                    RELEASES
                 </Row>
             </Grid>
         </div>
     )
 }
 
-export default RepoCommit;
+export default RepoResources;
