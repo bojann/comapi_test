@@ -4,10 +4,8 @@ import {Link} from 'react-router-dom';
 
 const RepoList = ({gitRepositories, onClickHandlePathname}) => {
     const publicList = gitRepositories.map( (repo) => {
-        console.log('repo:   ',repo);
-
-        let releaselink = `/releases?${repo.name}`
-        let commitslink = `/commits?${repo.name}`
+        let releaselink = `/releases/${repo.name}`
+        let commitslink = `/commits/${repo.name}`
         let gitCommitsPath = `${repo.name}/commits`;
         let gitReleaselink = `${repo.name}/releases`;
 

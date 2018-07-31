@@ -23,3 +23,7 @@
   margin: 100px auto;
 }
 
+.repo-commits .repo-list-item {
+  height: 100%;
+  text-align: left;
+}

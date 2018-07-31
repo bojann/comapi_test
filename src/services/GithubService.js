@@ -1,22 +1,20 @@
-import React from 'react';
 import axios from 'axios';
 
 const GithubService = {
-    constructor() {
-        super();
-        this._get = this._get.bind()
-    }
-
-    _get(baseUrl, pathName) {
+    getData(url) {
         return axios({
-                mehod: 'GET',
-                url: `${baseUrl}/${pathName}`,
-                timeout: 5000,
-            })
-            .then( (resp) => {
-                console.log(resp.data);          
-                return resp.data;
-            })
+              mehod: 'GET',
+              url: url,
+              timeout: 5000,
+          })
+          .then( (resp) => {
+              console.log(resp.data);
+              return resp.data;
+          })
+          .catch((error) => {
+            //handle error
+            console.error(error);
+        });
     }
 }
 
