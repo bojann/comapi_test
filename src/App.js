@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Loadable from 'react-loadable';
-import GithubService from './services/GithubService'
 
 // import LoadingSpinner from './components/LoadingSpinner';
-
 import './App.css';
+
 const LoadingSpinner = () => <div>Page is Loading...</div>;
 
-const BASE_URL = 'https://api.github.com';
-const FIRM = '/comapi';
-let gitscope = '/orgs';
-let pathnamePart = 'repos';
-let defaultUrl = `${BASE_URL}${gitscope}${FIRM}/${pathnamePart}`;
-
-const RepoList = Loadable({
-  loader: () => import('./components/RepoList'),
+const RepoView = Loadable({
+  loader: () => import('./components/RepoView'),
   loading: LoadingSpinner,
 });
-const RepoCommit = Loadable({
-  loader: () => import('./components/RepoCommit'),
+const RepoCommits = Loadable({
+  loader: () => import('./components/RepoCommits'),
   loading: LoadingSpinner,
 });
 const RepoReleases = Loadable({
@@ -33,15 +26,16 @@ class App extends Component {
     super(props)
 
     this.state = {
-      responseData: [],
-      routeUrl: defaultUrl
-    };
+      repoUrl: '/'
+    }; 
 
     this.onClickHandlePath = this.onClickHandlePath.bind(this);
   }
 
   onClickHandlePath(ev) {
-    console.log('onClickHandlePath ====>   ', ev.target);
+    const BASE_URL = 'https://api.github.com'
+    const FIRM = '/comapi';
+    let gitscope = '/orgs';
     let pathnamePart = ev.target.dataset['gitpathname'];
 
     if((pathnamePart.indexOf('releases') !== -1) || (pathnamePart.indexOf('commits') !== -1)) {
@@ -49,47 +43,12 @@ class App extends Component {
     }
     let url = `${BASE_URL}${gitscope}${FIRM}/${pathnamePart}`;
 
-    debugger;
-    GithubService.getData(url)
-      .then((resp) => {
-          this.setState((prevState,props) => {
-            return{
-              responseData: resp
-            }
-          });
-      })
-
     this.setState((prevState,props) => {
+      console.log('App setState prevState :', prevState);
       return{
-        routeUrl: url
+        repoUrl: url
       }
     });
-  }
-
-  componentDidMount() {
-    debugger;
-    GithubService.getData(this.state.routeUrl)
-      .then((resp) => {
-          this.setState((prevState,props) => {
-            return{
-              responseData: resp
-            }
-          });
-      })
-    // axios({
-    //   mehod: 'GET',
-    //   url: url,
-    //   timeout: 5000,
-    // })
-    //   .then( (resp) => {
-    //     let publicRepos = resp.data;
-    //
-    //     this.setState((prevState,props) => {
-    //       return{
-    //         response: publicRepos
-    //       }
-    //     });
-    //   })
   }
 
   render() {
@@ -101,13 +60,13 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path='/' render={ () => {
-              return <RepoList gitRepositories={this.state.responseData} onClickHandlePathname={this.onClickHandlePath}></RepoList>
+              return <RepoView repoUrl={this.state.repoUrl} onClickHandlePathname={this.onClickHandlePath}></RepoView>
             }} />
             <Route path='/releases/:id' render={ () => {
-              return <RepoReleases gitReleases={this.state.responseData} onClickHandlePathname={this.onClickHandlePath}></RepoReleases>
+              return <RepoReleases repoUrl={this.state.repoUrl} onClickHandlePathname={this.onClickHandlePath}></RepoReleases>
             }} />
             <Route path='/commits/:id'  render={ () => {
-              return <RepoCommit gitCommits={this.state.responseData} onClickHandlePathname={this.onClickHandlePath}></RepoCommit>
+              return <RepoCommits repoUrl={this.state.repoUrl} onClickHandlePathname={this.onClickHandlePath}></RepoCommits>
             }} />
           </Switch>
         </BrowserRouter>

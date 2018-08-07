@@ -2,7 +2,7 @@ import React from 'react';
 import {Col, Grid, Row, ListGroup, ListGroupItem, Button} from 'react-bootstrap/lib';
 import {Link} from 'react-router-dom';
 
-const RepoList = ({gitRepositories, onClickHandlePathname}) => {
+const RepoItemList = ({gitRepositories, onClickHandlePathname}) => {
     const publicList = gitRepositories.map( (repo) => {
         let releaselink = `/releases/${repo.name}`
         let commitslink = `/commits/${repo.name}`
@@ -33,16 +33,14 @@ const RepoList = ({gitRepositories, onClickHandlePathname}) => {
     })
 
     return(
-        <div>
-            <Grid>
-                <Row className="show-grid">
-                    <ListGroup>
-                        {publicList}
-                    </ListGroup>
-                </Row>
-            </Grid>
-        </div>
+        <Grid>
+            <Row className="show-grid">
+                <ListGroup>
+                    {publicList}
+                </ListGroup>
+            </Row>
+        </Grid>
     )
 }
 
-export default RepoList;
+export default RepoItemList;
