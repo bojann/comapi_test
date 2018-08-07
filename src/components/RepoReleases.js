@@ -1,22 +1,96 @@
-import React from 'react';
-import { Grid, Row } from 'react-bootstrap/lib';
+import React,{Component} from 'react';
+import { Row, Grid, Col, ListGroupItem, ListGroup, Media, } from 'react-bootstrap/lib';
+import defaultAvatar from '../assets/pikachu_avatar.png';
+import GithubService from '../services/GithubService';
 
-const RepoResources = ({gitReleases}) => {
-    const releaseList = gitReleases.map( (release) => {
+class RepoResources extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            gitReleases: []
+        }
+
+        this.loadContent = this.loadContent.bind(this);
+    }
+
+    loadContent() {
+        const BASE_URL = 'https://api.github.com/repos/comapi';
+        let pathname = window.location.pathname;
+        let regExPathname = pathname.match(/(\/[\w\-]+){2}/)[1];
+        let url = (this.props.repoUrl === '/') ? `${BASE_URL}${regExPathname}/releases` : this.props.repoUrl;
+
+        GithubService.getData(url)
+            .then((resp) => {
+                this.setState((prevState,props) => {
+                    return {
+                        gitReleases: resp,
+                        url: url
+                    }
+                });
+            })
+            .catch( (err) => {
+                console.error(`Parsing faild, ${err}`);
+            });
+    }
+
+    componentDidMount(prevProps, prevState) {
+        this.loadContent()
+    }
+
+    render() {
         return(
-            <div>{release}</div>
+            <div className="repo-commits">
+                <Grid>
+                    <Row className="show-grid">
+                        <h2>List of commits:</h2>
+                        <ListGroup>
+                            <ReleaseList gitReleases={this.state.gitReleases} />
+                        </ListGroup>
+                    </Row>
+                </Grid>
+            </div>
+        )
+    }
+
+}
+
+function ReleaseList(props) {
+    return props.gitReleases.map( (releaseItem) => {
+        if( !releaseItem ) {
+            return false;
+        }
+
+        return(
+            <Col xs={6} md={12} key={releaseItem.node_id}>
+                <ListGroupItem bsStyle="info" className="repo-list-item">
+                  <Media>
+                      <Media.Left align="top">
+                          {(releaseItem.author && releaseItem.author.avatar_url)
+                          ?
+                          <img width={64} height={64} src={releaseItem.author.avatar_url}  alt="thumbnail" />
+                          :
+                          <img width={64} height={64} src={defaultAvatar}  alt={defaultAvatar} />
+                          }
+                      </Media.Left>
+                      <Media.Body>
+                          <Media.Heading>Name: {releaseItem.name}</Media.Heading>
+                          {(releaseItem.name)
+                            ?
+                            <p>Author name: {releaseItem.name}</p>
+                            :
+                            <p>Author username: {releaseItem.login}</p>
+                          }
+                          <p>Author name: {releaseItem.name}</p>
+                          <p>Tag: {releaseItem.tag_name}</p>
+                          <p>Publish date: {releaseItem.published_at}</p>
+                          <a href={releaseItem.html_url} target="_blank">Link to {releaseItem.name}</a>
+                      </Media.Body>
+                    </Media>
+                </ListGroupItem>
+            </Col>
         )
     });
-
-    return(
-        <div>
-            <Grid>
-                <Row className="show-grid">
-                    RELEASES
-                </Row>
-            </Grid>
-        </div>
-    )
 }
 
 export default RepoResources;

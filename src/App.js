@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter,Link, Route, Switch} from 'react-router-dom';
+import {Row, Button} from 'react-bootstrap/lib';
 import Loadable from 'react-loadable';
 
 // import LoadingSpinner from './components/LoadingSpinner';
@@ -27,7 +28,7 @@ class App extends Component {
 
     this.state = {
       repoUrl: '/'
-    }; 
+    };
 
     this.onClickHandlePath = this.onClickHandlePath.bind(this);
   }
@@ -70,6 +71,11 @@ class App extends Component {
             }} />
           </Switch>
         </BrowserRouter>
+        <Row>
+          <Button>
+              <Link to={commitslink} data-gitpathname={gitCommitsPath} onClick={onClickHandlePathname}>Back to repo list</Link>
+          </Button>
+        </Row>
       </div>
     )
   }
