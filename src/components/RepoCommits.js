@@ -13,7 +13,7 @@ class RepoCommits extends Component {
         }
 
         this.loadContent = this.loadContent.bind(this);
-    } 
+    }
 
     loadContent() {
         const BASE_URL = 'https://api.github.com/repos/comapi';
@@ -61,24 +61,24 @@ function CommitList(props) {
         if( !commitItem.commit && !commitItem.committer ) {
             return false;
         }
-    
+
         return(
             <Col xs={6} md={12} key={commitItem.sha}>
                 <ListGroupItem bsStyle="info" className="repo-list-item">
-                <Media>
-                    <Media.Left align="top">
-                        {(commitItem.committer && commitItem.committer.avatar_url)
-                        ?
-                        <img width={64} height={64} src={commitItem.committer.avatar_url}  alt="thumbnail" />
-                        :
-                        <img width={64} height={64} src={defaultAvatar}  alt={defaultAvatar} />
-                        }
-                    </Media.Left>
-                    <Media.Body>
-                        <Media.Heading>Name: {commitItem.commit.committer.name}</Media.Heading>
-                        <p>Commit message: {commitItem.commit.message}</p>
-                        <p>Date of commit: {commitItem.commit.committer.date}</p>
-                    </Media.Body>
+                  <Media>
+                      <Media.Left align="top">
+                          {(commitItem.committer && commitItem.committer.avatar_url)
+                          ?
+                          <img width={64} height={64} src={commitItem.committer.avatar_url}  alt="thumbnail" />
+                          :
+                          <img width={64} height={64} src={defaultAvatar}  alt={defaultAvatar} />
+                          }
+                      </Media.Left>
+                      <Media.Body>
+                          <Media.Heading>Name: {commitItem.commit.committer.name}</Media.Heading>
+                          <p>Commit message: {commitItem.commit.message}</p>
+                          <p>Date of commit: {commitItem.commit.committer.date}</p>
+                      </Media.Body>
                     </Media>
                 </ListGroupItem>
             </Col>
