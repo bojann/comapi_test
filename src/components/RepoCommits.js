@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import PropTypes from 'prop-types';
 import { Row, Grid, Col, ListGroupItem, ListGroup, Media, Button} from 'react-bootstrap/lib';
 import defaultAvatar from '../assets/pikachu_avatar.png';
 import GithubService from '../services/GithubService';
@@ -90,6 +91,10 @@ function CommitList(props) {
             </Col>
         )
     });
+}
+
+RepoCommits.propTypes = {
+    repoUrl: PropTypes.string
 }
 
 export default RepoCommits;
