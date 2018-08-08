@@ -4,7 +4,7 @@ import ReactLoading from 'react-loading';
 const LoadingSpinner = () => {
     return (
         <div>
-            <ReactLoading type='spinningBubbles' className='custom-spinner' color='blue' height='356' width='200'></ReactLoading> 
+            <ReactLoading type='spin' className='custom-spinner' color='blue' height='356' width='200'></ReactLoading> 
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import { Row, Grid, Col, ListGroupItem, ListGroup, Media, } from 'react-bootstrap/lib';
+import { Row, Grid, Col, ListGroupItem, ListGroup, Media, Button} from 'react-bootstrap/lib';
 import defaultAvatar from '../assets/pikachu_avatar.png';
 import GithubService from '../services/GithubService';
+import {Link} from 'react-router-dom';
 
 class RepoResources extends Component {
     constructor(props) {
@@ -43,7 +44,12 @@ class RepoResources extends Component {
             <div className="repo-commits">
                 <Grid>
                     <Row className="show-grid">
-                        <h2>List of commits:</h2>
+                        <Col xs={2} md={2} >
+                            <Link to={'/'}><Button>Back to repo list</Button></Link>
+                        </Col>
+                    </Row>
+                    <Row className="show-grid">
+                        <h2>List of Releases:</h2>
                         <ListGroup>
                             <ReleaseList gitReleases={this.state.gitReleases} />
                         </ListGroup>
@@ -56,10 +62,22 @@ class RepoResources extends Component {
 }
 
 function ReleaseList(props) {
+    if(!props.gitReleases.length) {
+        return (
+            <Col xs={6} md={12}>
+                <ListGroupItem>
+                    <span className="empty-response">There are no releases from this repository</span>
+                </ListGroupItem>
+            </Col>
+        )
+    }
+
     return props.gitReleases.map( (releaseItem) => {
         if( !releaseItem ) {
             return false;
         }
+
+        let publishTime = new Date(releaseItem.published_at).toDateString();
 
         return(
             <Col xs={6} md={12} key={releaseItem.node_id}>
@@ -75,16 +93,10 @@ function ReleaseList(props) {
                       </Media.Left>
                       <Media.Body>
                           <Media.Heading>Name: {releaseItem.name}</Media.Heading>
-                          {(releaseItem.name)
-                            ?
-                            <p>Author name: {releaseItem.name}</p>
-                            :
-                            <p>Author username: {releaseItem.login}</p>
-                          }
-                          <p>Author name: {releaseItem.name}</p>
+                          <p>Author username: {releaseItem.author.login}</p>
                           <p>Tag: {releaseItem.tag_name}</p>
-                          <p>Publish date: {releaseItem.published_at}</p>
-                          <a href={releaseItem.html_url} target="_blank">Link to {releaseItem.name}</a>
+                          <p>Publish date: {publishTime}</p>
+                          <a href={releaseItem.html_url} target="_blank">>> {releaseItem.name}</a>
                       </Media.Body>
                     </Media>
                 </ListGroupItem>

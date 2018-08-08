@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import { Row, Grid, Col, ListGroupItem, ListGroup, Media, } from 'react-bootstrap/lib';
+import { Row, Grid, Col, ListGroupItem, ListGroup, Media, Button} from 'react-bootstrap/lib';
 import defaultAvatar from '../assets/pikachu_avatar.png';
 import GithubService from '../services/GithubService';
+import {Link} from 'react-router-dom';
 
 //gitCommits
 class RepoCommits extends Component {
@@ -43,6 +44,11 @@ class RepoCommits extends Component {
         return(
             <div className="repo-commits">
                 <Grid>
+                    <Row className="show-grid">
+                        <Col xs={2} md={2} >
+                            <Link to={'/'}><Button>Back to repo list</Button></Link>
+                        </Col>
+                    </Row>
                     <Row className="show-grid">
                         <h2>List of commits:</h2>
                         <ListGroup>

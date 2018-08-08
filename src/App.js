@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {BrowserRouter,Link, Route, Switch} from 'react-router-dom';
-import {Row, Button} from 'react-bootstrap/lib';
 import Loadable from 'react-loadable';
 
-// import LoadingSpinner from './components/LoadingSpinner';
+import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
 
-const LoadingSpinner = () => <div>Page is Loading...</div>;
+// const LoadingSpinner = () => <div>Page is Loading...</div>;
 
 const RepoView = Loadable({
   loader: () => import('./components/RepoView'),
@@ -45,7 +44,6 @@ class App extends Component {
     let url = `${BASE_URL}${gitscope}${FIRM}/${pathnamePart}`;
 
     this.setState((prevState,props) => {
-      console.log('App setState prevState :', prevState);
       return{
         repoUrl: url
       }
@@ -56,7 +54,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Comapi Github Public Repos</h1>
+          <h1 className="App-title">Comapi Github Public Repo's</h1>
         </header>
         <BrowserRouter>
           <Switch>
@@ -71,11 +69,6 @@ class App extends Component {
             }} />
           </Switch>
         </BrowserRouter>
-        <Row>
-          <Button>
-              <Link to={commitslink} data-gitpathname={gitCommitsPath} onClick={onClickHandlePathname}>Back to repo list</Link>
-          </Button>
-        </Row>
       </div>
     )
   }
