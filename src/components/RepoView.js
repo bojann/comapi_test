@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import PropTypes from 'prop-types';
 import RepoItemList from './RepoItemList';
 import GithubService from '../services/GithubService';
 
@@ -40,6 +41,10 @@ class RepoView extends Component {
         )
     }
    
+}
+
+RepoView.propTypes = {
+  onClickHandlePathname: PropTypes.func
 }
 
 export default RepoView;

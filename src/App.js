@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter,Link, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import LoadingSpinner from './components/LoadingSpinner';
