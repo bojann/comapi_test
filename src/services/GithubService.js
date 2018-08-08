@@ -8,7 +8,6 @@ const GithubService = {
               timeout: 5000,
           })
           .then( (resp) => {
-              console.log(resp.data);
               return resp.data;
           })
           .catch((error) => {

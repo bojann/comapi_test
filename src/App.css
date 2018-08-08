@@ -7,6 +7,7 @@
   height: 150px;
   padding: 20px;
   color: white;
+  margin-bottom: 20px;
 }
 
 .red-color {
@@ -19,11 +20,18 @@
 }
 
 .custom-spinner {
-  display: block;
-  margin: 100px auto;
+    display: block;
+    width: 200px;
+    height: auto;
+    margin: 100px auto 0;
 }
 
 .repo-commits .repo-list-item {
   height: 100%;
   text-align: left;
+}
+
+.empty-response {
+  color: #b32727;
+  font-size: 1.2rem;
 }

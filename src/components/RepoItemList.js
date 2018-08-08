@@ -3,6 +3,16 @@ import {Col, Grid, Row, ListGroup, ListGroupItem, Button} from 'react-bootstrap/
 import {Link} from 'react-router-dom';
 
 const RepoItemList = ({gitRepositories, onClickHandlePathname}) => {
+    if(!gitRepositories.length) {
+        return (
+            <Col xs={6} md={12}>
+                <ListGroupItem>
+                    <span className="empty-response">There are no git repositories</span>
+                </ListGroupItem>
+            </Col>
+        )
+    }
+
     const publicList = gitRepositories.map( (repo) => {
         let releaselink = `/releases/${repo.name}`
         let commitslink = `/commits/${repo.name}`
